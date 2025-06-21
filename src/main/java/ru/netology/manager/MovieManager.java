@@ -39,9 +39,9 @@ public class MovieManager {
 
     }
 
-    public PosterMovie[] findLast() {
+    public PosterMovie[] findLast() {       // Возрашает массив в обратном порядке
         int resultLength = 0;                // Временная переменная
-        if (limit == movies.length) {        // Если limit  равен  длине массива movie
+        if (limit >= movies.length) {        // Если limit  равен  длине массива movie
             resultLength = movies.length;    // То итоговый limit равен длине массива movies
         } else {
             resultLength = getLimit();       // Иначе итоговый лимит равен значению из поля лимит

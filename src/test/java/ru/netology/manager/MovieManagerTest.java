@@ -74,7 +74,7 @@ class MovieManagerTest {
 
 
     @Test
-    public void shouldReverseAllMoviesChangeLimit() {  // Должен перевернуть все фильмы с изменённым лимитом на 3
+    public void shouldReverseAllMoviesChangeLimit() {  // Должен вернуть все фильмы с изменённым лимитом на 3
         PosterMovie[] expected = {
                 movie3, movie2, movie1
         };
@@ -83,7 +83,7 @@ class MovieManagerTest {
     }
 
     @Test
-    public void shouldReverseWhenLimitEcMoviesLength() {  // Должен перевернуть где (limit) равен длине массива фильмов
+    public void shouldReverseWhenLimitEcMoviesLength() {  // Должен вернуть где (limit) равен длине массива фильмов
         MovieManager movieManager = new MovieManager();
         movieManager.save(movie1);
         movieManager.save(movie2);
@@ -101,5 +101,34 @@ class MovieManagerTest {
 
 
     }
+
+    @Test
+    public void shouldReverseWhenLimitEcMoviesLengthDown() {  // Должен вернуть где меньше массив фильмов в обратном порядке где количество фильмов меньше лимита
+        MovieManager movieManager3 = new MovieManager();
+        movieManager3.save(movie1);
+        movieManager3.save(movie2);
+        movieManager3.save(movie3);
+        movieManager3.save(movie4);
+        PosterMovie[] expected = {movie4, movie3, movie2, movie1};
+        PosterMovie[] actual = movieManager3.findLast();
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldReverseWhenLimitEcMoviesLengthUp() {  // Должен вернуть в обратном порядке 5, так как количество фильмов меньше лимита
+        MovieManager movieManager3 = new MovieManager();
+        movieManager3.save(movie1);
+        movieManager3.save(movie2);
+        movieManager3.save(movie3);
+        movieManager3.save(movie4);
+        movieManager3.save(movie5);
+        movieManager3.save(movie6);
+        PosterMovie[] expected = {movie5, movie4, movie3, movie2, movie1};
+        PosterMovie[] actual =movieManager3.findLast();
+        Assertions.assertArrayEquals(expected,actual);
+
+    }
 }
+
+
 
