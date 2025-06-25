@@ -1,16 +1,11 @@
 package ru.netology.manager;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.PosterMovie;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class MovieManagerTest {
-    MovieManager manager = new MovieManager();     // Объект менеджера с лимитом по умолчанию
-
-    MovieManager manager2 = new MovieManager(3); // Объект менеджера с новым лимитом
+    MovieManager manager;
 
     PosterMovie movie1 = new PosterMovie(2, "Бладшот", "Боевик");
     PosterMovie movie2 = new PosterMovie(22, "Вперед", "Мультфильм");
@@ -21,31 +16,17 @@ class MovieManagerTest {
     PosterMovie movie7 = new PosterMovie(72, "Номер один", "Комедия");
 
 
-    @BeforeEach    // Выполнять перед каждым тестом
-    public void setup() {
-        manager.save(movie1);   // Добавление фильма в массив movie хранящийся у менеджера
+    @Test  // Тест на добавление нового Фильма
+    public void addMovies() {
+        manager = new MovieManager();
+        manager.save(movie1);
         manager.save(movie2);
         manager.save(movie3);
         manager.save(movie4);
         manager.save(movie5);
         manager.save(movie6);
         manager.save(movie7);
-    }
 
-    @BeforeEach     // Для объекта менеджера с лимитом
-    public void setup2() {
-        manager2.save(movie1);
-        manager2.save(movie2);
-        manager2.save(movie3);
-        manager2.save(movie4);
-        manager2.save(movie5);
-        manager2.save(movie6);
-        manager2.save(movie7);
-
-    }
-
-    @Test  // Тест на добавление нового Фильма
-    public void addMovies() {
         PosterMovie posterMovie = new PosterMovie(55, "Король Артур", "Боевик");
         manager.save(posterMovie); // Вызываем у обьекта менеджер метод SAVE для добавление нового фильма в конец списка
         PosterMovie[] expected = {
@@ -65,7 +46,16 @@ class MovieManagerTest {
 
     @Test
     public void shouldReverseAllMovies() {    // Должен перевернуть все фильмы с изменённым лимитом по умолчанию
+        manager = new MovieManager();
+        manager.save(movie1);
+        manager.save(movie2);
+        manager.save(movie3);
+        manager.save(movie4);
+        manager.save(movie5);
+        manager.save(movie6);
+        manager.save(movie7);
         PosterMovie[] expected = {
+
                 movie5, movie4, movie3, movie2, movie1
         };
         PosterMovie[] actual = manager.findLast();
@@ -75,28 +65,33 @@ class MovieManagerTest {
 
     @Test
     public void shouldReverseAllMoviesChangeLimit() {  // Должен вернуть все фильмы с изменённым лимитом на 3
+        manager = new MovieManager(3);
+        manager.save(movie1);
+        manager.save(movie2);
+        manager.save(movie3);
+
         PosterMovie[] expected = {
                 movie3, movie2, movie1
         };
-        PosterMovie[] actual = manager2.findLast();
+        PosterMovie[] actual = manager.findLast();
         Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
     public void shouldReverseWhenLimitEcMoviesLength() {  // Должен вернуть где (limit) равен длине массива фильмов
-        MovieManager movieManager = new MovieManager();
-        movieManager.save(movie1);
-        movieManager.save(movie2);
-        movieManager.save(movie3);
-        movieManager.save(movie4);
-        movieManager.save(movie5);
+        manager = new MovieManager();
+        manager.save(movie1);
+        manager.save(movie2);
+        manager.save(movie3);
+        manager.save(movie4);
+        manager.save(movie5);
         PosterMovie[] expected = {
                 movie5,
                 movie4,
                 movie3,
                 movie2,
                 movie1};
-        PosterMovie[] actual = movieManager.findLast();
+        PosterMovie[] actual = manager.findLast();
         Assertions.assertArrayEquals(expected, actual);
 
 
@@ -104,28 +99,29 @@ class MovieManagerTest {
 
     @Test
     public void shouldReverseWhenLimitEcMoviesLengthDown() {  // Должен вернуть где меньше массив фильмов в обратном порядке где количество фильмов меньше лимита
-        MovieManager movieManager3 = new MovieManager();
-        movieManager3.save(movie1);
-        movieManager3.save(movie2);
-        movieManager3.save(movie3);
-        movieManager3.save(movie4);
+        manager = new MovieManager();
+
+        manager.save(movie1);
+        manager.save(movie2);
+        manager.save(movie3);
+        manager.save(movie4);
         PosterMovie[] expected = {movie4, movie3, movie2, movie1};
-        PosterMovie[] actual = movieManager3.findLast();
+        PosterMovie[] actual = manager.findLast();
         Assertions.assertArrayEquals(expected, actual);
     }
 
     @Test
     public void shouldReverseWhenLimitEcMoviesLengthUp() {  // Должен вернуть в обратном порядке 5, так как количество фильмов меньше лимита
-        MovieManager movieManager3 = new MovieManager();
-        movieManager3.save(movie1);
-        movieManager3.save(movie2);
-        movieManager3.save(movie3);
-        movieManager3.save(movie4);
-        movieManager3.save(movie5);
-        movieManager3.save(movie6);
+        manager = new MovieManager();
+        manager.save(movie1);
+        manager.save(movie2);
+        manager.save(movie3);
+        manager.save(movie4);
+        manager.save(movie5);
+        manager.save(movie6);
         PosterMovie[] expected = {movie5, movie4, movie3, movie2, movie1};
-        PosterMovie[] actual =movieManager3.findLast();
-        Assertions.assertArrayEquals(expected,actual);
+        PosterMovie[] actual = manager.findLast();
+        Assertions.assertArrayEquals(expected, actual);
 
     }
 }
