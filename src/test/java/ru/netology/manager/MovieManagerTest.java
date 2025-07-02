@@ -118,7 +118,7 @@ class MovieManagerTest {
         manager.save(movie6);
         manager.save(movie7);
         PosterMovie[] expected = {
-                movie4, movie3, movie2, movie1
+                movie7, movie6, movie5, movie4
         };
         PosterMovie[] actual = manager.findLast();
         Assertions.assertArrayEquals(expected, actual);

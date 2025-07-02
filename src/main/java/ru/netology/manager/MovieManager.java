@@ -49,10 +49,11 @@ public class MovieManager {
         }
         PosterMovie[] result = new PosterMovie[resultLength];
         for (int i = 0; i < resultLength; i++) {
-            result[i] = findAll()[resultLength - 1 - i];
+            result[i] = findAll()[movies.length - 1 - i];
         }
         return result;
     }
+
 
 }
 
